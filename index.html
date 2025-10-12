@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Modern</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { background-color: #f3f4f6; }
+
+  /* Login modal overlay */
+  #loginModal { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Animated Upload Button */
+  .btn-upload {
+    position: relative; overflow: hidden; transition: background 0.3s;
+  }
+  .btn-upload:hover { background: #7f1dff; }
+  .btn-upload:after {
+    content: ''; position: absolute; left: -50%; top: 0;
+    width: 200%; height: 100%; background: rgba(255,255,255,0.15);
+    transform: skewX(-20deg); transition: all 0.5s;
+  }
+  .btn-upload:hover:after { left: 100%; }
+
+  /* Toast notifications */
+  #toast {
+    position: fixed; top: 20px; right: 20px; z-index: 9999;
+  }
+</style>
+</head>
+<body class="h-screen w-screen">
+
+<!-- Login Modal -->
+<div id="loginModal" class="flex items-center justify-center">
+  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md fade-in">
+    <h2 class="text-2xl font-bold mb-4 text-center">Admin Login</h2>
+    <form id="loginForm" class="space-y-4">
+      <input type="email" name="email" placeholder="Email" class="w-full p-2 border rounded" required>
+      <input type="password" name="password" placeholder="Password" class="w-full p-2 border rounded" required>
+      <button type="submit" class="w-full bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Login</button>
+    </form>
+  </div>
+</div>
+
+<!-- Upload Panel -->
+<div id="uploadPanel" class="hidden max-w-3xl mx-auto mt-20 p-8 bg-white rounded-xl shadow-lg fade-in">
+  <h2 class="text-2xl font-bold mb-6 text-center">Upload New Event</h2>
+  <form id="eventForm" class="space-y-4">
+    <input type="text" name="title" placeholder="Event Title" class="w-full p-2 border rounded" required>
+    <textarea name="description" placeholder="Event Description" class="w-full p-2 border rounded" required></textarea>
+
+    <label>Image:
+      <input type="file" name="image" accept="image/*" class="w-full mt-1">
+    </label>
+
+    <label>Video:
+      <input type="file" name="video" accept="video/*" class="w-full mt-1">
+    </label>
+
+    <button type="submit" class="btn-upload w-full bg-purple-600 text-white px-4 py-2 rounded">Upload Event</button>
+  </form>
+</div>
+
+<!-- Toast container -->
+<div id="toast"></div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3p5pH9sbJ_RfngsfcjWlPZanK2hUBwqesS2V2W1z8-LjQ8ILfwnD6hAUhD2Tg3jtNbQ/exec"; // Replace with Apps Script Web App URL
+
+// Login system
+const LOGIN_EMAIL = "admin@example.com";
+const LOGIN_PASSWORD = "password123";
+
+const loginModal = document.getElementById("loginModal");
+const loginForm = document.getElementById("loginForm");
+const uploadPanel = document.getElementById("uploadPanel");
+
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = loginForm.email.value;
+  const password = loginForm.password.value;
+
+  if(email === LOGIN_EMAIL && password === LOGIN_PASSWORD){
+    showToast("✅ Login Successful", "green");
+    loginModal.style.display = "none";
+    uploadPanel.classList.remove("hidden");
+  } else {
+    showToast("❌ Invalid Email or Password", "red");
+  }
+});
+
+// Upload events
+const eventForm = document.getElementById("eventForm");
+eventForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+  const payload = {};
+  payload.title = data.get("title");
+  payload.description = data.get("description");
+
+  const imageFile = data.get("image");
+  if(imageFile && imageFile.size > 0){
+    const buffer = await imageFile.arrayBuffer();
+    payload.imageBlob = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+    payload.imageType = imageFile.type;
+    payload.imageName = imageFile.name;
+  }
+
+  const videoFile = data.get("video");
+  if(videoFile && videoFile.size > 0){
+    const buffer = await videoFile.arrayBuffer();
+    payload.videoBlob = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+    payload.videoType = videoFile.type;
+    payload.videoName = videoFile.name;
+  }
+
+  const btn = form.querySelector(".btn-upload");
+  btn.disabled = true;
+  btn.innerText = "Uploading...";
+
+  try {
+    const res = await fetch(SCRIPT_URL, { method: "POST", body: new URLSearchParams(payload) });
+    const result = await res.json();
+    if(result.status === "success"){
+      showToast("✅ Event uploaded successfully!", "green");
+      form.reset();
+    } else {
+      showToast("❌ Upload failed: " + result.message, "red");
+    }
+  } catch(err){
+    showToast("❌ Upload failed: " + err.message, "red");
+  } finally {
+    btn.disabled = false;
+    btn.innerText = "Upload Event";
+  }
+});
+
+// Toast function
+function showToast(message, color){
+  const toast = document.createElement("div");
+  toast.className = `px-4 py-2 rounded shadow text-white mb-2 animate-fade`;
+  toast.style.backgroundColor = color;
+  toast.innerText = message;
+  document.getElementById("toast").appendChild(toast);
+  setTimeout(()=>{ toast.remove(); }, 4000);
+}
+</script>
+</body>
+</html>
