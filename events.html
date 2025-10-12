@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media & Events</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom Animations */
+    .fade-in {
+      animation: fadeIn 1.2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hover animation for cards */
+    .card-hover {
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .card-hover:hover {
+      transform: scale(1.05) translateY(-6px);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+    }
+
+    /* Image Zoom effect */
+    .img-hover img {
+      transition: transform 0.4s ease;
+    }
+    .img-hover:hover img {
+      transform: scale(1.15);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- Navbar -->
+  <header class="fixed w-full top-0 bg-gradient-to-r from-purple-600 to-pink-500 shadow-lg z-50">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center text-white">
+      <h1 class="text-2xl font-bold">North East People's Development Federation</h1>
+      <ul class="hidden md:flex gap-6 text-lg">
+        <li><a href="home.html" class="hover:underline">Home</a></li>
+        <li><a href="about.html" class="hover:underline">About</a></li>
+        <li><a href="contact.html" class="hover:underline">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-32 pb-16 bg-gradient-to-r from-purple-100 to-pink-100 text-center fade-in">
+    <h2 class="text-4xl md:text-5xl font-bold mb-4">Media & Events</h2>
+    <p class="text-lg md:text-xl max-w-2xl mx-auto text-gray-700">
+      Stay updated with our latest news, events, and media highlights. Explore the stories that shape us.
+    </p>
+  </section>
+
+  <!-- News & Events Section -->
+  <section class="max-w-7xl mx-auto px-6 py-12">
+    <h3 class="text-3xl font-bold text-center mb-10">Latest Highlights</h3>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Card 1 -->
+      <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover img-hover">
+        <img src="https://source.unsplash.com/600x400/?event,conference" alt="Event 1" class="w-full h-56 object-cover">
+        <div class="p-5">
+          <h4 class="text-xl font-semibold mb-2">Annual Business Conference 2025</h4>
+          <p class="text-gray-600 mb-3 text-sm">March 18, 2025 | New York</p>
+          <p class="text-gray-700">Our annual conference brought together industry leaders to discuss the future of digital innovation.</p>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover img-hover">
+        <img src="https://source.unsplash.com/600x400/?media,press" alt="Event 2" class="w-full h-56 object-cover">
+        <div class="p-5">
+          <h4 class="text-xl font-semibold mb-2">Press Release: New Product Launch</h4>
+          <p class="text-gray-600 mb-3 text-sm">April 02, 2025 | Online</p>
+          <p class="text-gray-700">We officially launched our latest product line, redefining the user experience in the tech world.</p>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover img-hover">
+        <img src="https://source.unsplash.com/600x400/?award,ceremony" alt="Event 3" class="w-full h-56 object-cover">
+        <div class="p-5">
+          <h4 class="text-xl font-semibold mb-2">Award Ceremony: Excellence in Innovation</h4>
+          <p class="text-gray-600 mb-3 text-sm">May 10, 2025 | Los Angeles</p>
+          <p class="text-gray-700">Honored to receive the award for technological excellence in the global innovation summit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- More Events (List view) -->
+  <section class="max-w-7xl mx-auto px-6 pb-16">
+    <h3 class="text-3xl font-bold mb-6">More Events</h3>
+    <ul class="space-y-5">
+      <!-- Item 1 -->
+      <li class="bg-white rounded-xl shadow-md overflow-hidden">
+        <a href="#" class="flex flex-col sm:flex-row items-stretch">
+          <div class="sm:w-56 h-40 w-full overflow-hidden">
+            <img src="https://source.unsplash.com/600x400/?seminar,business" alt="Seminar" class="w-full h-full object-cover">
+          </div>
+          <div class="p-5 flex-1">
+            <div class="flex items-center justify-between gap-3">
+              <h4 class="text-xl font-semibold">Entrepreneurship Seminar Series</h4>
+              <span class="text-sm text-gray-500">Feb 12, 2025</span>
+            </div>
+            <p class="text-gray-600 mt-1 text-sm">Guwahati, Assam</p>
+            <p class="text-gray-700 mt-3">An interactive session with founders and mentors covering early-stage funding and market entry strategies.</p>
+          </div>
+        </a>
+      </li>
+
+      <!-- Item 2 -->
+      <li class="bg-white rounded-xl shadow-md overflow-hidden">
+        <a href="#" class="flex flex-col sm:flex-row items-stretch">
+          <div class="sm:w-56 h-40 w-full overflow-hidden">
+            <img src="https://source.unsplash.com/600x400/?startup,workshop" alt="Workshop" class="w-full h-full object-cover">
+          </div>
+          <div class="p-5 flex-1">
+            <div class="flex items-center justify-between gap-3">
+              <h4 class="text-xl font-semibold">Startup Skills Workshop</h4>
+              <span class="text-sm text-gray-500">Mar 03, 2025</span>
+            </div>
+            <p class="text-gray-600 mt-1 text-sm">Shillong, Meghalaya</p>
+            <p class="text-gray-700 mt-3">Hands-on learning on product design, customer discovery, and MVP validation for aspiring founders.</p>
+          </div>
+        </a>
+      </li>
+
+      <!-- Item 3 -->
+      <li class="bg-white rounded-xl shadow-md overflow-hidden">
+        <a href="#" class="flex flex-col sm:flex-row items-stretch">
+          <div class="sm:w-56 h-40 w-full overflow-hidden">
+            <img src="https://source.unsplash.com/600x400/?networking,people" alt="Networking" class="w-full h-full object-cover">
+          </div>
+          <div class="p-5 flex-1">
+            <div class="flex items-center justify-between gap-3">
+              <h4 class="text-xl font-semibold">Founder Networking Night</h4>
+              <span class="text-sm text-gray-500">Mar 21, 2025</span>
+            </div>
+            <p class="text-gray-600 mt-1 text-sm">Imphal, Manipur</p>
+            <p class="text-gray-700 mt-3">Connect with local entrepreneurs, investors, and mentors to share experiences and opportunities.</p>
+          </div>
+        </a>
+      </li>
+
+      <!-- Item 4 -->
+      <li class="bg-white rounded-xl shadow-md overflow-hidden">
+        <a href="#" class="flex flex-col sm:flex-row items-stretch">
+          <div class="sm:w-56 h-40 w-full overflow-hidden">
+            <img src="https://source.unsplash.com/600x400/?expo,exhibition" alt="Expo" class="w-full h-full object-cover">
+          </div>
+          <div class="p-5 flex-1">
+            <div class="flex items-center justify-between gap-3">
+              <h4 class="text-xl font-semibold">Northeast Innovation Expo</h4>
+              <span class="text-sm text-gray-500">Apr 05, 2025</span>
+            </div>
+            <p class="text-gray-600 mt-1 text-sm">Aizawl, Mizoram</p>
+            <p class="text-gray-700 mt-3">Showcasing innovative products and services from startups across the Northeast region.</p>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-purple-600 to-pink-500 text-white py-6 text-center mt-10">
+    <p>&copy; 2025 North East People's Development Federation. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

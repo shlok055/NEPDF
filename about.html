@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Northeast People's Development Federation</title>
+  <style>
+    /* Reset & Fonts */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+    body {
+      background: #fff;
+      color: #333;
+    }
+
+    /* Gradient Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(90deg, #2691a1, #2a8698);
+      color: #fff;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+    }
+    .header-top img {
+      width: 60px;
+    }
+    .header-top h1 {
+      font-size: 22px;
+      font-weight: 600;
+    }
+    nav {
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      padding: 8px 12px;
+      transition: all 0.3s ease;
+    }
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 5px;
+      z-index: 1001;
+    }
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: #fff;
+      margin: 3px 0;
+      transition: 0.3s;
+      border-radius: 2px;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: url('assets/pp.jpg') no-repeat center/cover fixed;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-content h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    .hero-content p {
+      font-size: 20px;
+      max-width: 700px;
+    }
+
+    /* Who We Are */
+    .about-section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 60px 10%;
+      gap: 40px;
+    }
+    .about-section img {
+      width: 450px;
+      border-radius: 20px;
+      object-fit: cover;
+      border: 5px solid rgba(255,255,255,0.5);
+      backdrop-filter: blur(5px);
+      transition: transform 0.3s ease;
+    }
+    .about-section img:hover {
+      transform: scale(1.05);
+    }
+    .about-text {
+      flex: 1;
+    }
+    .about-text h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+      color: #1e6f72;
+    }
+    .about-text p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    /* Vision & Mission */
+    .vision-mission {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 50px 10%;
+    }
+    .card {
+      flex: 1;
+      min-width: 280px;
+      max-width: 400px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+    }
+    .card h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #2a8798;
+    }
+    .card p {
+      font-size: 16px;
+    }
+
+    /* Leadership Team */
+    .leadership {
+      padding: 60px 10%;
+      text-align: left;
+    }
+    .leadership h2 {
+      font-size: 32px;
+      margin-bottom: 40px;
+    }
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+    .team-card {
+      width: 220px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 16px;
+      text-align: center;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+    }
+    .team-card:hover {
+      transform: scale(1.05);
+    }
+    .team-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255,255,255,0.6);
+      margin-bottom: 10px;
+    }
+    .team-card h4 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    .team-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* Footer */
+    footer {
+      background: #1e6a72;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .about-section {
+        padding: 40px 5%;
+      }
+      .vision-mission {
+        padding: 40px 5%;
+      }
+      .leadership {
+        padding: 40px 5%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-top {
+        padding: 10px 20px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .header-top h1 {
+        font-size: 18px;
+        text-align: center;
+        flex: 1;
+      }
+      .header-top img {
+        width: 50px;
+      }
+      
+      .hamburger {
+        display: flex;
+      }
+      
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 250px;
+        height: 100vh;
+        background: linear-gradient(135deg, #1e6b72, #2a8b98);
+        flex-direction: column;
+        gap: 0;
+        padding: 80px 0 20px 0;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+      }
+      nav.active {
+        right: 0;
+      }
+      nav a {
+        padding: 15px 25px;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        text-align: left;
+        width: 100%;
+      }
+      nav a:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      
+      .hero-content h1 {
+        font-size: 36px;
+      }
+      .hero-content p {
+        font-size: 18px;
+        padding: 0 20px;
+      }
+      
+      .about-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 5%;
+        gap: 30px;
+      }
+      .about-section img {
+        width: 100%;
+        max-width: 400px;
+      }
+      .about-text h2 {
+        font-size: 28px;
+      }
+      .about-text p {
+        font-size: 16px;
+      }
+      
+      .vision-mission {
+        flex-direction: column;
+        padding: 40px 5%;
+        gap: 30px;
+      }
+      .card {
+        min-width: auto;
+        max-width: none;
+        padding: 25px 20px;
+      }
+      .card h3 {
+        font-size: 22px;
+      }
+      .card p {
+        font-size: 15px;
+      }
+      
+      .leadership {
+        padding: 40px 5%;
+      }
+      .leadership h2 {
+        font-size: 28px;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .leadership .about-text p {
+        font-size: 15px;
+        line-height: 1.5;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-top {
+        padding: 8px 15px;
+      }
+      .header-top h1 {
+        font-size: 16px;
+      }
+      .header-top img {
+        width: 45px;
+      }
+      
+      .hero-content h1 {
+        font-size: 28px;
+        padding: 0 15px;
+      }
+      .hero-content p {
+        font-size: 16px;
+        padding: 0 15px;
+      }
+      
+      .about-section {
+        padding: 30px 3%;
+        gap: 25px;
+      }
+      .about-text h2 {
+        font-size: 24px;
+      }
+      .about-text p {
+        font-size: 15px;
+      }
+      
+      .vision-mission {
+        padding: 30px 3%;
+        gap: 25px;
+      }
+      .card {
+        padding: 20px 15px;
+      }
+      .card h3 {
+        font-size: 20px;
+      }
+      .card p {
+        font-size: 14px;
+      }
+      
+      .leadership {
+        padding: 30px 3%;
+      }
+      .leadership h2 {
+        font-size: 24px;
+        margin-bottom: 25px;
+      }
+      .leadership .about-text p {
+        font-size: 14px;
+      }
+      
+      footer {
+        padding: 15px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .header-top h1 {
+        font-size: 14px;
+      }
+      .hero-content h1 {
+        font-size: 24px;
+      }
+      .hero-content p {
+        font-size: 14px;
+      }
+      .about-text h2 {
+        font-size: 22px;
+      }
+      .card h3 {
+        font-size: 18px;
+      }
+      .leadership h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <img src=assets/CJHJFG.png alt="Logo">
+      <h1>Northeast People's Development Federation</h1>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="about.html" class="active">About Us</a>
+      <a href="#">Activities</a>
+      <a href="#">Projects</a>
+      <a href="#">Media & Events</a>
+      <a href="#">Notice Board</a>
+      <a href="#">Incubation</a>
+      <a href="#">Buy Online</a>
+      <a href="#">Support Us</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>About Us</h1>
+      <p>Empowering North Eastern India with sustainable development and progress.</p>
+    </div>
+  </section>
+
+  <!-- Who We Are -->
+  <section class="about-section">
+    <img src=assets/CJHJFG.png alt="About Us" loading="lazy">
+    <div class="about-text">
+      <h2>Who We Are</h2>
+      <p>
+        Incorporated on 18th September 2020, the North East People’s Development 
+        Federation (NEPDF) serves as an Implementing Agency (IA) of the Tiwa Autonomous Council, 
+        Government of Assam, Morigaon. NEPDF is also recognised as an Implementing Agency 
+        under Office of the Development Commissioner for Handlooms and the Development 
+        Commissioner for Handicrafts, Ministry of Textiles, Government of India, New Delhi.<br> 
+             We are committed to advancing the socio-economic and cultural well-being of 
+        weavers, artisans, artists, and farmers across Assam and the Northeast Region of India. Our 
+        work spans the handloom, handicraft, cultural, agriculture, horticulture, and allied sectors, 
+        focusing on preserving heritage, promoting livelihoods, and driving sustainable community 
+        growth. 
+      </p>
+    </div>
+  </section>
+
+  <!-- Vision & Mission -->
+  <section class="vision-mission">
+    <div class="card">
+      <h3>Our Vision</h3>
+      <p><b>Fostering livelihood, identity, and progress through socio-economic and cultural development. <br></b>
+        We envision a vibrant and self-reliant Northeast where communities not only flourish economically but 
+        also thrive culturally. Our vision is to see every weaver, artisan, farmer, and cultural practitioner 
+        empowered with sustainable livelihoods, rooted in a strong sense of identity, and equipped to participate 
+        in an inclusive and resilient economy.</p>
+    </div>
+    <div class="card">
+      <h3>Our Mission</h3>
+      <p><b>Connecting Opportunity, Empowering Lives. <br></b>
+        We strive to bridge resources, skills, and markets to create sustainable livelihoods, uplift communities, 
+        and preserve the rich cultural heritage of Assam and the Northeast Region. Our mission encompasses 
+        comprehensive community development through capacity building, skill enhancement, and market access 
+        initiatives.</p>
+    </div>
+  </section>
+
+  <!-- Leadership Team -->
+  <section class="leadership">
+    <div class="about-text">
+      <h2>Objectives</h2>
+      <p>
+        <b>The main objects of the Federation are as follows:<br></b>
+            (i) To promote in India or elsewhere the welfare activities, socio-economic development, 
+            social assistance, social insurance, mental hygiene, public health, recreation and the cause of 
+            education including women’s education, children’s education particularly the girl child’s 
+            education, and adult education and to establish, promote, setup, run, maintain, assist, 
+            finance, support and help in setting up, running and maintaining institutions, orphanages, 
+            handicapped, widows, homes, lunatics asylums, old age homes, poor house or other 
+            establishment for relief and help to the poor, old and infirm people, destitute etc. and in this 
+            regard carry out all types of development programmes and undertake all types of initiatives 
+            and interventions in the areas of hunger and food security, gender equality, education, 
+            agriculture and natural resources, poverty alleviation, health and nutrition, slum 
+            development, environment, renewable energy, water resources, income and livelihood 
+            creation and support and to uplift the Artisans, Weavers, Farmers, Entrepreneurs, Self Help 
+            Groups, NGOs, Women’s, Youths, Individuals, Societies, etc. for their overall Development in 
+            all Sectors of People’s Lifecycle and any area in which development activity and intervention 
+            is required and to generate employment by organizing and promoting various self
+            employment generation schemes for the society, particularly for girls and women; to work for 
+            providing all kinds of economic and management techniques and infrastructural facilities, 
+            particularly those belonging to below poverty line, through the development of agricultural 
+            products, herbal products, dairy products, handlooms and handicrafts etc. and also through 
+            implementing various Government Schemes and Projects and to carry all such objects as 
+            deemed expedient for the attainment of the foregoing objects. <br></p>
+        <p>&nbsp;</p>
+        <p>
+            (ii) To organise domestic, national, and international exhibition, expos, melas, trade fair, 
+            seminars, trainings, workshops etc. and participate in the same for the purpose of creating 
+            employment opportunities, marketing and selling of products, raw materials and all such 
+            related activities. <br>
+        </p>
+        <p>&nbsp;</p>
+        <p>
+          (iii) To receive financial and non-financial assistance from Govt., Semi-Govt., N.G.O., 
+          International Body, Bank, Company, and any other legal entity or individual or institutions for 
+          attainment the objective of the organizations and to accomplish all the socio- economic needs 
+          of the people and to do all such activities as necessary to carry on the above-mentioned 
+          objects.
+        </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Northeast People's Development Federation | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    // Hamburger Menu Functionality
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('nav');
+    const navLinks = document.querySelectorAll('nav a');
+
+    // Toggle menu when hamburger is clicked
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    // Close menu when a link is clicked
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+      }
+    });
+
+    // Close menu on window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

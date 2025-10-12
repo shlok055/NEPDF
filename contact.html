@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>North East People's Development Federation – Contact Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0d0d0d;        /* footer backdrop */
+      --txt:#101113;       /* main body text */
+      --muted:#6b7280;     /* gray-500 */
+      --muted-2:#9ca3af;   /* gray-400 */
+      --brand:#7a0c16;     /* maroon */
+      --brand-2:#c5162b;   /* crimson */
+      --card:#f3f4f6;      /* gray-100 */
+      --card-2:#eeeeee;    /* light */
+      --border:#e5e7eb;    /* gray-200 */
+      --shadow: 0 8px 24px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--txt);
+      background:#fff;
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1120px, 92%); margin-inline:auto}
+
+    /* Top Bar */
+    .topbar{display:flex; align-items:center; justify-content:space-between; padding:14px 16px;}
+    .brand{
+      display:flex; gap:14px; align-items:center;
+    }
+    .brand-logo{width:38px; height:38px; object-fit:contain; border-radius:8px; background:#fff; box-shadow:var(--shadow)}
+    .brand-mark{
+      width:38px; height:38px; display:grid; place-items:center; border-radius:8px; background:conic-gradient(from 180deg at 50% 50%, var(--brand), var(--brand-2)); color:#fff; font-weight:800; font-family:Poppins, Inter, sans-serif; box-shadow:var(--shadow)
+    }
+    .brand-lines{display:flex; flex-direction:column; line-height:1.1}
+    .brand-title{font-weight:700; font-size:14px}
+    .brand-sub{font-size:10px; color:var(--muted); max-width:420px}
+    .hamburger{width:40px; height:40px; display:grid; place-items:center; border-radius:10px; border:1px solid var(--border); background:rgba(255,255,255,.6); backdrop-filter:blur(6px)}
+    .hamburger div{width:18px; height:2px; background:#111; position:relative; transition:transform .35s ease, background .25s ease}
+    .hamburger div:before,.hamburger div:after{content:""; position:absolute; left:0; right:0; height:2px; background:#111; transition:transform .35s ease, top .35s ease, bottom .35s ease, opacity .25s ease}
+    .hamburger div:before{top:-6px}
+    .hamburger div:after{bottom:-6px}
+    .hamburger.active div{background:transparent}
+    .hamburger.active div:before{top:0; transform:rotate(45deg)}
+    .hamburger.active div:after{bottom:0; transform:rotate(-45deg)}
+
+    /* Fullscreen glass menu */
+    .menu-overlay{position:fixed; inset:0; display:none; place-items:center; z-index:50; backdrop-filter:blur(16px); background:linear-gradient(135deg, rgba(122,12,22,.65), rgba(197,22,43,.55));}
+    .menu-overlay.open{display:grid}
+    .menu-sheet{width:min(720px,92%); padding:36px 24px; border-radius:18px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); box-shadow:0 20px 60px rgba(0,0,0,.25)}
+    .menu-grid{display:grid; gap:14px; text-align:center}
+    .menu-grid a{display:block; padding:12px 16px; font-weight:600; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.06)}
+    .menu-grid a:hover{background:rgba(255,255,255,.12)}
+
+    /* Hero */
+    .hero{position:relative; background:linear-gradient(160deg, rgba(122,12,22,.92), rgba(197,22,43,.88)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="%237a0c16"/><stop offset="1" stop-color="%23c5162b"/></linearGradient></defs><rect width="1200" height="400" fill="url(%23g)"/></svg>') center/cover;
+      color:#fff; padding:88px 0 94px; text-align:center; overflow:hidden}
+    .hero h1{font-family:Poppins, Inter, sans-serif; font-weight:700; font-size:48px; letter-spacing:.2px; margin:0 0 10px}
+    .crumbs{color:#f3f4f6aa; font-weight:500}
+    .crumbs a{color:#fff}
+
+    /* Contact Cards */
+    .cards{display:grid; grid-template-columns:1fr; gap:22px; margin-top:-34px}
+    @media (min-width:960px){ .cards{ grid-template-columns: 1fr 1fr 1fr } }
+    .card{border-radius:18px; padding:40px 26px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.12); border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.14); backdrop-filter: blur(10px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px}
+    .card + .card{background:rgba(255,255,255,.18)}
+    .card .icon{width:58px; height:58px; display:grid; place-items:center; border-radius:18px; margin:0 auto 14px; background:linear-gradient(135deg, var(--brand), var(--brand-2)); border:1px solid rgba(255,255,255,.35); box-shadow:0 6px 18px rgba(0,0,0,.12)}
+    .card .icon svg path, .card .icon svg circle{stroke:#fff}
+    .card h3{margin:6px 0 6px; font-weight:700; letter-spacing:.3px}
+    .card p{margin:4px 0 0; font-weight:600}
+    .muted{color:var(--muted)}
+
+    /* Partners strip */
+    .partners{display:flex; gap:24px; flex-wrap:wrap; align-items:center; justify-content:center; padding:36px 0 14px}
+    .pill{height:26px; border-radius:999px; border:1px dashed var(--border); padding:0 12px; display:flex; align-items:center; font-size:12px; color:var(--muted)}
+
+    /* Share section */
+    .share-wrap{padding:8px 0 24px; text-align:center}
+    .share-wrap h2{font-family:Poppins, Inter, sans-serif; font-size:36px; margin:0 0 18px}
+    .socials{display:flex; gap:16px; justify-content:center}
+    .social{width:44px; height:44px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.3); border-radius:999px; box-shadow:var(--shadow); background:#fff}
+
+    /* Map and logo */
+    .map-wrap{padding:18px 0 10px}
+    .map-frame{width:100%; height:420px; border:0; border-radius:16px; box-shadow:var(--shadow)}
+    .logo-wrap{display:grid; place-items:center; padding:26px 0 36px}
+    .logo-wrap img{width:min(200px, 60%); height:auto; filter:drop-shadow(0 8px 24px rgba(0,0,0,.12))}
+
+    /* Footer */
+    footer{background:var(--bg); color:#e5e7eb}
+    .footer-inner{padding:36px 0 18px}
+    .footer-top{display:grid; gap:28px; grid-template-columns: 1fr;}
+    .footer-brand{ text-align:center }
+    .footer-brand h4{margin:6px 0 6px; font-size:14px}
+    .footer-brand p{margin:0; color:#d1d5db; font-size:12px}
+    .links h5{margin:.4rem 0 .5rem; font-size:14px}
+    .links a{display:block; color:#d1d5db; font-size:13px; padding:.22rem 0}
+    @media (min-width:860px){
+      .footer-top{ grid-template-columns: 1fr 1fr; align-items:start }
+      .links{ justify-self:end; text-align:left }
+    }
+    .source{border-top:1px solid #1f2937; padding:18px 0 0; margin-top:20px; font-size:12px; color:#9ca3af}
+    .addr{margin-top:8px}
+    .foot-socials{display:flex; gap:10px; justify-content:center; margin:14px 0}
+    .copyright{display:flex; justify-content:space-between; gap:12px; border-top:1px solid #1f2937; padding:12px 0 22px; font-size:12px; color:#9ca3af}
+    .small{font-size:12px}
+
+    /* helpers */
+    .sr-only{position:absolute; left:-9999px}
+    .spacer{height:28px}
+    .logo-txt{font-weight:800; letter-spacing:1px}
+    .w-max{width:max-content}
+    .center{text-align:center}
+    .grid-3{display:grid; gap:10px; grid-template-columns:repeat(3, minmax(0,1fr))}
+    .quick-links{padding:20px 0 0}
+    .quick-links h5{margin:0 0 8px}
+  </style>
+</head>
+<body>
+  <!-- Topbar -->
+  <header class="topbar container" aria-label="site header">
+    <div class="brand">
+      <img class="brand-logo" src="assets/CJHJFG.png" alt="NEPDF Logo">
+      <div class="brand-lines">
+        <div class="brand-title">North East People's Development Federation</div>
+      </div>
+    </div>
+    <button class="hamburger" aria-label="Open menu"><div></div></button>
+  </header>
+
+  <!-- Fullscreen glass menu -->
+  <nav class="menu-overlay" aria-hidden="true" aria-label="fullscreen navigation">
+    <div class="menu-sheet">
+      <div class="menu-grid">
+        <a href="home.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <div class="crumbs"><a href="#">Home</a> &nbsp;→&nbsp; Contact Us</div>
+    </div>
+  </section>
+
+  <!-- Contact Cards -->
+  <section class="container cards" aria-label="contact blocks">
+    <article class="card" aria-labelledby="phone-title">
+      <div class="icon" aria-hidden="true">
+        <!-- phone icon -->
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V21a1 1 0 0 1-1 1C11.85 22 2 12.15 2 1a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.24 1.01l-2.2 2.2Z" stroke="#111" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <h3 id="phone-title">Phone</h3>
+      <p class="w-max">+91 7896979629</p>
+    </article>
+
+    <article class="card" aria-labelledby="email-title">
+      <div class="icon" aria-hidden="true">
+        <!-- mail icon -->
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="#111" stroke-width="1.5"/>
+          <path d="m22 8-10 6L2 8" stroke="#111" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <h3 id="email-title">Email</h3>
+      <p class="w-max">nepdfassam@gmail.com</p>
+    </article>
+
+    <article class="card" aria-labelledby="addr-title">
+      <div class="icon" aria-hidden="true">
+        <!-- pin icon -->
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 22s8-6.58 8-12A8 8 0 0 0 4 10c0 5.42 8 12 8 12Z" stroke="#111" stroke-width="1.5"/>
+          <circle cx="12" cy="10" r="3" stroke="#111" stroke-width="1.5" />
+        </svg>
+      </div>
+      <h3 id="addr-title">Address</h3>
+      <p class="muted center">Near, Games Village, Lalmati, Guwahati, Assam 781029</p>
+    </article>
+  </section>
+
+  <!-- logos strip (lightweight clones) -->
+  <section class="partners container" aria-label="partners">
+    <span class="pill">india.gov.in</span>
+    <span class="pill">MSDE</span>
+    <span class="pill">Skill India</span>
+    <span class="pill">Make in India</span>
+    <span class="pill">Azadi Ka Amrit</span>
+    <span class="pill">G20</span>
+  </section>
+
+  <section class="share-wrap container">
+    <h2>Share this Page!</h2>
+    <div class="socials" role="list" aria-label="share">
+      <a class="social" href="#" aria-label="Facebook">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M13 22v-9h3l1-4h-4V7a1 1 0 0 1 1-1h3V2h-3a5 5 0 0 0-5 5v2H6v4h3v9h4Z" stroke="#111" stroke-width="1.5"/></svg>
+      </a>
+      <a class="social" href="#" aria-label="Twitter">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 5.94a8.5 8.5 0 0 1-2.36.65 4.12 4.12 0 0 0 1.82-2.27 8.23 8.23 0 0 1-2.6 1A4.11 4.11 0 0 0 12 8.12a11.67 11.67 0 0 1-8.46-4.29 4.11 4.11 0 0 0 1.27 5.49 4.08 4.08 0 0 1-1.86-.52v.05a4.12 4.12 0 0 0 3.3 4 4.15 4.15 0 0 1-1.85.07 4.12 4.12 0 0 0 3.84 2.85A8.25 8.25 0 0 1 2 18.57 11.64 11.64 0 0 0 8.29 20c7.55 0 11.68-6.26 11.68-11.68 0-.18-.01-.36-.02-.55A8.36 8.36 0 0 0 22 5.94Z" stroke="#111" stroke-width="1.5"/></svg>
+      </a>
+      <a class="social" href="#" aria-label="WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.52 3.48A11.93 11.93 0 0 0 12 0 11.93 11.93 0 0 0 3.48 3.48 11.93 11.93 0 0 0 0 12c0 2.1.55 4.1 1.6 5.88L0 24l6.27-1.64A12 12 0 0 0 12 24a11.93 11.93 0 0 0 8.52-3.48A11.93 11.93 0 0 0 24 12c0-3.21-1.25-6.23-3.48-8.52ZM12 21.33a9.3 9.3 0 0 1-4.74-1.3l-.34-.2-3.73.97.99-3.64-.22-.37A9.3 9.3 0 0 1 2.67 12 9.33 9.33 0 1 1 12 21.33Z" stroke="#111" stroke-width="1.25"/></svg>
+      </a>
+      <a class="social" href="#" aria-label="Email">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="#111" stroke-width="1.5"/><path d="m22 8-10 6L2 8" stroke="#111" stroke-width="1.5"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Map and logo -->
+  <section class="container map-wrap" aria-label="location map">
+    <iframe class="map-frame" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="Map"
+      src="https://www.google.com/maps?q=26.109647,91.787606&z=15&output=embed">
+    </iframe>
+  </section>
+  <div class="logo-wrap">
+    <img src="assets/CJHJFG.png" alt="Organization Logo">
+  </div>
+
+  <footer>
+    <div class="footer-inner container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h4>North East People's Development Federation</h4>
+        </div>
+        <div class="links">          
+          <div class="addr">
+            <h5>Address</h5>
+            <div class="small">Near, Games Village, Lalmati, Guwahati, Assam 781029</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <div>© Copyright 2025 Noth East People's Development Federation. All Rights Reserved.</div>
+        <div class="w-max"><a href="#">Terms and Conditions</a> · <a href="#">Privacy Policy</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // smooth scroll for in-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+      anchor.addEventListener('click', function(e){
+        var id = anchor.getAttribute('href').substring(1);
+        if(!id) return;
+        var el = document.getElementById(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // Hamburger and fullscreen menu
+    (function(){
+      var btn = document.querySelector('.hamburger');
+      var overlay = document.querySelector('.menu-overlay');
+      function openMenu(){
+        btn.classList.add('active');
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+      }
+      function closeMenu(){
+        btn.classList.remove('active');
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden','true');
+        document.body.style.overflow='';
+      }
+      btn.addEventListener('click', function(){
+        if(overlay.classList.contains('open')) closeMenu(); else openMenu();
+      });
+      overlay.addEventListener('click', function(e){
+        if(e.target === overlay) closeMenu();
+      });
+      overlay.querySelectorAll('a').forEach(function(link){
+        link.addEventListener('click', closeMenu);
+      });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && overlay.classList.contains('open')) closeMenu();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEPDF -- North East Prople's Development Federation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --blue-900:#30d5cb; --blue-800:#02b0a4; --blue-700:#00746c; --blue-600:#029389; --blue-500:#0eb0ab; --blue-100:#e6f7f6; --gray-100:#f5f7fb; --gray-200:#e9eef5; --gray-300:#d8e0ea; --gray-600:#4a545d; --green-600:#00c78b;
+      --container:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;font-family:'Inter',system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1f3737;background:#fff}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* Top Gov strip */
+    .topbar{background:#0e7878;color:#fff;font-size:12px}
+    .topbar .inner{max-width:var(--container);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:6px 16px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand img{width:26px;height:26px}
+    .brand .title{font-weight:700;letter-spacing:.2px}
+    .tools{display:flex;align-items:center;gap:14px}
+    .tools a{opacity:.95}
+    .tools .btn{padding:4px 8px;border-radius:4px;background:rgba(255,255,255,.12)}
+
+    /* Secondary strip for nav only */
+    header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--gray-200)}
+    .navline{border-top:1px solid var(--gray-200)}
+    nav .inner{max-width:var(--container);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px}
+    .nav-items{display:flex;gap:18px;flex-wrap:wrap}
+    .nav-items a{font-weight:500;color:#1f2a37;padding:6px 8px;border-radius:6px}
+    .nav-items a:hover{background:var(--gray-100)}
+    .hamburger{display:none;flex-direction:column;gap:3px;cursor:pointer}
+    .hamburger span{width:24px;height:2px;background:#0f5e5e}
+
+    /* Layout helpers */
+    .container{max-width:var(--container);margin:0 auto;padding:0 16px}
+    .section{padding:28px 0}
+    .card{background:#fff;border:1px solid var(--gray-200);border-radius:8px;box-shadow:0 1px 2px rgba(16, 36, 40, 0.05)}
+    .card.pad{padding:16px}
+    h2.section-title{font-size:18px;margin:0 0 12px;color:#0a787a;border-bottom:2px solid var(--gray-200);padding-bottom:8px}
+
+    /* Hero banner */
+    .hero{position:relative;min-height:50vh;padding:0;display:grid;place-items:center;overflow:hidden}
+    .hero .hero-bg{position:absolute;inset:0}
+    .hero .hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.03);filter:brightness(.85) saturate(1.05)}
+    .hero .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10, 122, 118, 0.55),rgba(10, 116, 122, 0.25) 40%,rgba(255,255,255,0) 70%)}
+    .hero .hero-content{position:relative;text-align:center;color:#fff;padding:40px 16px;max-width:900px}
+    .hero h1{margin:0 0 8px;font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:.2px}
+    .hero p.sub{margin:0 0 16px;font-size:clamp(14px,1.8vw,18px);opacity:.95}
+    .hero .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;font-weight:600;cursor:pointer;border:0}
+    .btn.primary{background:#1bb0b5;color:#fff}
+    .btn.secondary{background:#2d7d69;color:#fff}
+
+    /* About NEPDF Fullscreen */
+    .about.fullscreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, var(--blue-100) 0%, var(--gray-100) 100%);padding:40px 20px}
+    .about-content{max-width:1000px;text-align:center;background:#fff;padding:60px 40px;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,0.1);border:1px solid var(--gray-200)}
+    .about-text p{font-size:18px;line-height:1.8;color:var(--gray-600);margin:0}
+    .about-text b{color:var(--blue-700);font-size:20px}
+
+    /* Activities carousel */
+    .carousel{position:relative}
+    .carousel .viewport{overflow:hidden;border-radius:8px}
+    .carousel .track{display:flex;transition:transform .45s ease}
+    .carousel .slide{min-width:100%;}
+    .carousel img{width:100%;height:280px;object-fit:cover}
+    .carousel .caption{padding:10px 12px;font-size:14px;color:#374151}
+    .carousel .arrow{position:absolute;top:40%;transform:translateY(-50%);background:#fff;border:1px solid var(--gray-300);width:34px;height:34px;border-radius:999px;display:grid;place-items:center;cursor:pointer}
+    .carousel .arrow:hover{background:var(--gray-100)}
+    .carousel .prev{left:-12px}
+    .carousel .next{right:-12px}
+
+    /* NE States panel */
+    .states{display:grid;grid-template-columns:360px 1fr;gap:18px}
+    .thumbs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .thumbs .thumb{position:relative;border-radius:6px;overflow:hidden}
+    .thumbs .thumb span{position:absolute;left:6px;bottom:6px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;padding:3px 6px;border-radius:4px}
+    .panel{background:#2ec29b;color:#e7f5e9;border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:10px}
+    .panel .btn{align-self:flex-start;border-radius:6px;background:#fff;color:#305f2f}
+
+    /* News & Events */
+    .news .item{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px dashed var(--gray-200)}
+    .bullet{width:8px;height:8px;border-radius:999px;background:#1bb5b5}
+
+    /* Organizations */
+    .tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+    .tab{padding:6px 10px;border:1px solid var(--gray-300);border-radius:6px;background:#f6f8fb;cursor:pointer;font-size:13px}
+    .tab.active{background:#1badb5;color:#fff;border-color:#1badb5}
+    .org-box{border:1px solid var(--gray-200);border-radius:6px;padding:12px}
+
+    /* Logos strip */
+    .logos-strip{background:transparent;border-top:0;border-bottom:0}
+    .logos-row{width:100%;margin:0;padding:0;display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:wrap}
+    .logos-row img{height:56px;object-fit:contain;background:transparent;filter:grayscale(1) contrast(1.05);opacity:.85;mix-blend:multiply;transition:filter .25s ease, opacity .25s ease, transform .25s ease}
+    .logos-row img:hover{filter:none;opacity:1;transform:translateY(-2px)}
+
+    /* Social Media two columns */
+    .social-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .social-box{min-height:220px}
+
+    /* Footer */
+    footer{background:#0f959c;color:#fff;margin-top:28px}
+    .footer-top{max-width:var(--container);margin:0 auto;padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px}
+    .footer-top h4{margin:0 0 8px;font-size:14px}
+    .footer-top ul{list-style:none;padding:0;margin:0}
+    .footer-top li{padding:4px 0;font-size:13px;opacity:.95}
+    .badges{display:flex;gap:8px;flex-wrap:wrap}
+    .social-icons{display:flex;gap:8px}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.2);text-align:center;padding:10px;font-size:12px}
+
+    /* Responsive */
+    @media (max-width: 1024px){
+      .about-grid{grid-template-columns:1fr}
+      .states{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 720px){
+      .nav-items{display:none}
+      .hamburger{display:flex}
+      nav.open .nav-items{display:flex;flex-direction:column;gap:10px;background:#fff;position:absolute;left:0;right:0;top:100%;padding:12px;border-bottom:1px solid var(--gray-200)}
+      .social-cols{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Government bar -->
+  <div class="topbar">
+    <div class="inner">
+      <div class="brand">
+        <img src="assets/CJHJFG.png" alt="Emblem">
+        <div class="title">NORTH EAST PEOPLE'S DEVELOPMENT FEDERATION</div>
+      </div>
+      <div class="tools">
+        <a href="#" title="Increase Font Size" class="tool-icon">
+          <img src=assets/facebook.png alt="Increase Font Size" width="20" height="20">
+        </a>
+        <a href="#" title="Normal Font Size" class="tool-icon">
+          <img src=assets/instagram.png alt="Normal Font Size" width="18" height="18">
+        </a>
+        <a href="#" title="Decrease Font Size" class="tool-icon">
+          <img src=assets/twitter.png alt="Decrease Font Size" width="16" height="16">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navline -->
+  <header class="navline">
+    <nav class="container" id="siteNav">
+      <div class="inner" style="padding-left:0;padding-right:0">
+        <div class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></div>
+        <div class="nav-items" id="navItems">
+          <a href="#hero">Home</a>
+          <a href="about.html">About Us</a>
+          <a href="#activities">Activities</a>
+          <a href="events.html">News & Events</a>
+          <a href="#orgs">Organizations</a>
+          <a href="#social">Social Media</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO banner with CTAs -->
+    <section class="hero section" id="hero" aria-label="Hero">
+      <div class="hero-bg" aria-hidden="true">
+        <img src="assets/hero.jpg" alt="North Eastern Region Hero Image">
+      </div>
+      <div class="hero-content">
+        <h1>Empowering the North Eastern Region</h1>
+        <p class="sub">Accelerating development, connectivity, entrepreneurship, and sustainable growth across all eight states.</p>
+        <div class="cta-row">
+          <button class="btn primary">Participate & Spread</button>
+          <button class="btn primary">Inspire to Hoist</button>
+          <button class="btn secondary">Upload Selfies</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logos strip above About -->
+    <section class="logos-strip section">
+      <div class="logos-row">
+        <img src="assets/CJHJFG.png" alt="Partner 1">
+        <img src="assets/CJHJFG.png" alt="Partner 2">
+        <img src="assets/CJHJFG.png" alt="Partner 3">
+        <img src="assets/CJHJFG.png" alt="Partner 4">
+        <img src="assets/CJHJFG.png" alt="Partner 5">
+        <img src="assets/CJHJFG.png" alt="Partner 6">
+        <img src="assets/CJHJFG.png" alt="Partner 7">
+        <img src="assets/CJHJFG.png" alt="Partner 8">
+      </div>
+    </section>
+
+    <!-- ABOUT NEPDF full screen -->
+    <section class="section about fullscreen" id="about">
+      <div class="about-content">
+        <h2 class="section-title"><b>WHY NEPDF?</b></h2>
+        <div class="about-text">
+            <p>
+              Incorporated on 18th September 2020, the North East People’s Development 
+              Federation (NEPDF) serves as an Implementing Agency (IA) of the Tiwa Autonomous Council, 
+              Government of Assam, Morigaon. NEPDF is also recognised as an Implementing Agency 
+              under Office of the Development Commissioner for Handlooms and the Development 
+              Commissioner for Handicrafts, Ministry of Textiles, Government of India, New Delhi. 
+              We are committed to advancing the socio-economic and cultural well-being of 
+              weavers, artisans, artists, and farmers across Assam and the Northeast Region of India. Our 
+              work spans the handloom, handicraft, cultural, agriculture, horticulture, and allied sectors, 
+              focusing on preserving heritage, promoting livelihoods, and driving sustainable community 
+              growth.</p>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ACTIVITIES carousel -->
+    <section class="section" id="activities">
+      <div class="container">
+        <h2 class="section-title">NEPDF ACTIVITIES!!</h2>
+        <div class="carousel card">
+          <div class="viewport">
+            <div class="track" id="track">
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&auto=format&w=1600&fit=crop" alt="Activity 1">
+                <div class="caption">The broad objective of NEDFi is to ensure focused development by providing assistance to projects in core infrastructure.</div>
+              </div>
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&auto=format&w=1600&fit=crop" alt="Activity 2">
+                <div class="caption">Capacity building, entrepreneurship, and connectivity projects across the region.</div>
+              </div>
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&auto=format&w=1600&fit=crop" alt="Activity 3">
+                <div class="caption">Sustainable tourism, culture and heritage initiatives.</div>
+              </div>
+            </div>
+          </div>
+          <button class="arrow prev" id="prev" aria-label="Previous">❮</button>
+          <button class="arrow next" id="next" aria-label="Next">❯</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- North East States panel -->
+    <section class="section" id="states">
+      <div class="container">
+        <div class="grid" style="display:grid;grid-template-columns:360px 1fr;gap:18px">
+          <div class="card pad">
+            <h2 class="section-title" style="border:none;padding:0;margin-bottom:10px">Explore North East</h2>
+            <div class="thumbs">
+              <!-- 8 state thumbs as placeholders -->
+              <a class="thumb" href="#"><img loading="lazy" src=assets/arunachal.jpeg alt="Arunachal"><span>ARUNACHAL PRADESH</span></a>
+              <a class="thumb" href="#"><img loading="lazy" src=assets/assam.jpg alt="Assam"><span>ASSAM</span></a>
+              <a class="thumb" href="#"><img loading="lazy" src=assets/manipur.jpg alt="Manipur"><span>MANIPUR</span></a>
+              <a class="thumb" href="#"><img loading="lazy" src=assets/meghalaya.jpg alt="Meghalaya"><span>MEGHALAYA</span></a>
+              <a class="thumb" href="#"><img loading="lazy" src=assets/mizoram.png alt="Mizoram"><span>MIZORAM</span></a>
+              <a class="thumb" href="#"><img loading="lazy" src=assets/nagaland.jpg alt="Nagaland"><span>NAGALAND</span></a>
+              <a class="thumb" href="#"><img loading="lazy" src=assets/sikkim.jpg alt="Sikkim"><span>SIKKIM</span></a>
+              <a class="thumb" href="#"><img loading="lazy" src=assets/tripura.jpeg alt="Tripura"><span>TRIPURA</span></a>
+            </div>
+          </div>
+          <div class="panel">
+            <h3 style="margin:0">NORTH EAST STATES</h3>
+            <p style="margin:6px 0 10px">Northeast India is a unique and culturally vibrant region of the country, 
+              comprising eight states commonly known as the "Seven Sisters"—Assam, Arunachal Pradesh, Manipur, Meghalaya, Mizoram, 
+              Nagaland, Tripura—and the "Brother" state, Sikkim. This region is often described as the gateway to Southeast Asia, sharing international
+              borders with countries like China, Bhutan, Myanmar, Bangladesh, and Nepal, which gives it immense strategic and economic importance.</p>
+              <p>
+              <b>Geography & Nature</b>
+              
+              Northeast India is blessed with breathtaking natural beauty, from the snow-capped Himalayas in 
+              Arunachal Pradesh and Sikkim to the lush tea gardens of Assam, the rolling hills of Nagaland and Manipur, 
+              and the spectacular waterfalls in Meghalaya. The region is home to dense forests, rare wildlife species like the one-horned
+              rhinoceros in Kaziranga National Park, and rich biodiversity, making it an ecological hotspot.
+              <br>
+              <b>Culture & People</b>
+              
+              The region is known for its ethnic diversity, housing over 200 distinct tribes and sub-tribes, 
+              each with its own language, traditions, and festivals. Festivals like Bihu (Assam), Hornbill Festival (Nagaland), 
+              Wangala (Meghalaya), and Chapchar Kut (Mizoram) reflect the vibrant cultural heritage.
+              <br>
+              <b>Languages & Religion</b>
+              
+              The region has a rich linguistic diversity with Assamese, Manipuri, Khasi, Mizo, 
+              Nagamese, and Nepali widely spoken, alongside hundreds of tribal dialects.
+              <br>
+              <b>Economy & Development</b>
+              
+              Agriculture, handloom weaving, tea cultivation (especially in Assam), and bamboo-based industries 
+              form the backbone of the economy. In recent years, eco-tourism and adventure tourism have gained popularity 
+              due to the region’s pristine landscapes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- News & Events -->
+    <section class="section" id="news">
+      <div class="container">
+        <h2 class="section-title">NEWS AND EVENTS</h2>
+        <div class="card pad news">
+          <div class="item"><span class="bullet"></span><a href="#">Rising Northeast Investors Summit 2025</a></div>
+          <div class="item"><span class="bullet"></span><a href="#">Year End Review 2024</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Organizations (Tabs) -->
+    <section class="section" id="orgs">
+      <div class="container">
+        <h2 class="section-title">ORGANIZATIONS</h2>
+        <div class="card pad">
+          <div class="tabs" id="tabs">
+            <button class="tab active" data-tab="nec">NEC</button>
+            <button class="tab" data-tab="neemac">NEEMAC</button>
+            <button class="tab" data-tab="nedfi">NEDFi</button>
+            <button class="tab" data-tab="necro">NECROMS</button>
+            <button class="tab" data-tab="necbdc">NECBDC</button>
+            <button class="tab" data-tab="about">ABOUT THEM</button>
+          </div>
+          <div class="org-box" id="orgBox">
+            <strong>NORTH EASTERN COUNCIL (NEC), SHILLONG</strong>
+            <p>NEC Secretariat, Nongrim Hills, Shillong-793003 • Email: secynec-meg[at]nic[dot]in</p>
+            <a class="btn" style="margin-top:6px">Click Here</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Media -->
+    <section class="section" id="social">
+      <div class="container">
+        <h2 class="section-title">SOCIAL MEDIA</h2>
+        <div class="social-cols">
+          <div class="card pad social-box">
+            <h3 style="margin-top:0">Facebook Feeds</h3>
+            <div style="height:160px;background:#f3f6fb;border:1px dashed #cbd5e1;display:grid;place-items:center;color:#64748b">Facebook widget placeholder</div>
+          </div>
+          <div class="card pad social-box">
+            <h3 style="margin-top:0">Twitter Feeds</h3>
+            <div style="height:160px;background:#f3f6fb;border:1px dashed #cbd5e1;display:grid;place-items:center;color:#64748b">Tweets by @MDONER_India</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div>
+        <h4>Other Links</h4>
+        <ul>
+          <li>Accessibility</li>
+          <li>Help</li>
+          <li>Website Policies</li>
+          <li>RTI</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Nav Links</h4>
+        <ul>
+          <li>Home</li>
+          <li>Contact Us</li>
+          <li>About Us</li>
+          <li>Activities</li>
+        </ul>
+      </div> 
+      <div>
+        <h4>Badges</h4>
+        <div class="badges">
+          <img src="https://dummyimage.com/90x40/1b6fb5/ffffff.png&text=GOV" alt="Gov badge"/>
+          <img src="https://dummyimage.com/90x40/2d7d46/ffffff.png&text=Digital+India" alt="Digital India"/>
+          <img src="https://dummyimage.com/90x40/f59e0b/ffffff.png&text=NIC" alt="NIC"/>
+        </div>
+      </div>
+      <div>
+        <h4>Contacts</h4>
+        <p style="margin:0 0 6px">nepdfassam@gmail.com</p>
+        <small>7896979629</small>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 Ministry of Development of North Eastern Region • Last updated: 24-08-2025</div>
+  </footer>
+
+  <script>
+    // Mobile nav
+    const nav = document.getElementById('siteNav');
+    const burger = document.getElementById('hamburger');
+    burger.addEventListener('click',()=>{ nav.classList.toggle('open'); burger.setAttribute('aria-expanded', nav.classList.contains('open')); });
+
+    // Simple carousel
+    const track = document.getElementById('track');
+    const slides = Array.from(track.children);
+    let index = 0;
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    function go(i){ index = (i+slides.length)%slides.length; track.style.transform = `translateX(-${index*100}%)`; }
+    prev.addEventListener('click',()=>go(index-1));
+    next.addEventListener('click',()=>go(index+1));
+    // auto-play (pause on hover)
+    let timer = setInterval(()=>go(index+1), 5000);
+    track.parentElement.addEventListener('mouseenter',()=>clearInterval(timer));
+    track.parentElement.addEventListener('mouseleave',()=>{timer=setInterval(()=>go(index+1),5000)});
+
+    // Tabs stub
+    const tabs = document.getElementById('tabs');
+    const orgBox = document.getElementById('orgBox');
+    tabs.addEventListener('click', (e)=>{
+      if(e.target.classList.contains('tab')){
+        tabs.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+        e.target.classList.add('active');
+        const id = e.target.dataset.tab;
+        orgBox.innerHTML = `<strong>${id.toUpperCase()}</strong><p>Demo copy for ${id.toUpperCase()} organization. Replace with actual details, address and links.</p><a class="btn" style="margin-top:6px">Click Here</a>`;
+      }
+    });
+  </script>
+</body>
+</html>
